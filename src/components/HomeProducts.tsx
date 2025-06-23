@@ -1,6 +1,7 @@
 "use client";
 import { useAppContext } from "@/context/AppContext";
-import { ProductCard } from "./ProductCard";
+import ProductCard from "@/components/ProductCard"; 
+
 
  const HomeProducts=()=>{
     const { products, router } = useAppContext();
