@@ -20,8 +20,8 @@ export async function GET(request: NextRequest) {
     const { cartItems } = user;
 
     return NextResponse.json({ success: true, cartItems });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, message: error.message }, { status: 500 });
+  } catch (error:  unknown) {
+    return NextResponse.json({ success: false, message: (error as Error).message }, { status: 500 });
   }
 }
 

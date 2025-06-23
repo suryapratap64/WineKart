@@ -30,7 +30,7 @@ async function connectDB(): Promise<Connection> {
   }
 
   if (!globalWithMongoose.mongoose.promise) {
-    if (!process.env.MONGODB_URI) {
+    if (!process.env.MONGO_URI) {
       throw new Error('MONGODB_URI not defined');
     }
 
@@ -39,7 +39,7 @@ async function connectDB(): Promise<Connection> {
     };
 
     globalWithMongoose.mongoose.promise = mongoose
-      .connect(`${process.env.MONGODB_URI}/quickcart`, opts)
+      .connect(`${process.env.MONGO_URI}/quickcart`, opts)
       .then((mongoose) => mongoose.connection);
   }
 
