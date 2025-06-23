@@ -1,24 +1,26 @@
-import { clerkClient } from '@clerk/nextjs/server';
-import { NextResponse } from 'next/server';
+// import { clerkClient } from '@clerk/nextjs/server';
+// import { NextResponse } from 'next/server';
 
-type AuthSellerReturn = Promise<boolean | ReturnType<typeof NextResponse.json>>;
+// type AuthSellerReturn = Promise<boolean | ReturnType<typeof NextResponse.json>>;
 
-const authSeller = async (userId: string): AuthSellerReturn => {
-  try {
-    const user = await clerkClient.users.getUser(userId);
+// const authSeller = async (userId: string): AuthSellerReturn => {
+//   try {
+//     // ✅ Correct usage — no `()`
+//     const user = await clerkClient.users.getUser(userId);
 
-    if (user.publicMetadata.role === 'seller') {
-      return true;
-    }
-    return false;
+//     if (user.publicMetadata.role === 'seller') {
+//       return true;
+//     }
 
-  } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : 'Internal error';
-    return NextResponse.json({ success: false, message });
-  }
-};
+//     return false;
+//   } catch (error: unknown) {
+//     const message = error instanceof Error ? error.message : 'Internal error';
+//     return NextResponse.json({ success: false, message });
+//   }
+// };
 
-export default authSeller;
+// export default authSeller;
+
 
 
 // import { clerkClient } from '@clerk/nextjs/server';
