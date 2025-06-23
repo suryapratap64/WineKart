@@ -81,10 +81,10 @@ export async function POST(request: NextRequest) {
       message: "Upload successful",
       newProduct,
     });
-  } catch (error: any) {
+  } catch (error:unknown) {
     console.error("Upload error:", error);
     return NextResponse.json(
-      { success: false, message: error.message || "Server error" },
+      { success: false, message: (error as Error).message || "Server error" },
       { status: 500 }
     );
   }

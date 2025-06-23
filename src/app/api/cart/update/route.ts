@@ -1,6 +1,6 @@
 import connectDB from "@/config/db";
 import { getAuth } from "@clerk/nextjs/server";
-import User from "@/models/User"; // should be default export
+import User from "@/models/User";
 import { NextRequest, NextResponse } from "next/server";
 
 interface CartItem {
@@ -29,8 +29,8 @@ export async function POST(request: NextRequest) {
     await user.save();
 
     return NextResponse.json({ success: true });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, message: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    return NextResponse.json({ success: false, message: (error as Error).message }, { status: 500 });
   }
 }
 

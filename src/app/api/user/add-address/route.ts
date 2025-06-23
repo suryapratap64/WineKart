@@ -28,9 +28,9 @@ export async function POST(request: NextRequest) {
       message: "Address added successfully",
       address: newAddress,
     });
-  } catch (error: any) {
+  } catch (error:unknown) {
     return NextResponse.json(
-      { success: false, message: error.message || "Failed to add address" },
+      { success: false, message: (error as Error).message || "Failed to add address" },
       { status: 500 }
     );
   }

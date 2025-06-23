@@ -62,9 +62,9 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true, message: "Order placed" });
 
-  } catch (error: any) {
+  } catch (error:unknown) {
     console.error("Order error:", error);
-    return NextResponse.json({ success: false, message: error.message || "Something went wrong" }, { status: 500 });
+    return NextResponse.json({ success: false, message: (error as Error).message || "Something went wrong" }, { status: 500 });
   }
 }
 

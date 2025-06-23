@@ -29,9 +29,9 @@ export async function GET(request: NextRequest) {
       .populate("items.product");
 
     return NextResponse.json({ success: true, orders });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
-      { success: false, message: error.message || "Server Error" },
+      { success: false, message: (error as Error).message || "Server Error" },
       { status: 500 }
     );
   }

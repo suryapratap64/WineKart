@@ -12,10 +12,10 @@ export async function GET(request: NextRequest) {
       success: true,
       products,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json({
       success: false,
-      message: error.message || "Failed to fetch products",
+      message: (error as Error).message || "Failed to fetch products",
     }, { status: 500 });
   }
 }

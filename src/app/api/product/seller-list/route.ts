@@ -22,9 +22,9 @@ export async function GET(request: NextRequest) {
 
     const products = await Product.find({ userId }); // Fetch only seller's products
     return NextResponse.json({ success: true, products });
-  } catch (error: any) {
+  } catch (error:unknown) {
     return NextResponse.json(
-      { success: false, message: error.message || "Something went wrong" },
+      { success: false, message: (error as Error).message || "Something went wrong" },
       { status: 500 }
     );
   }
