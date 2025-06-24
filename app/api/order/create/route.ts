@@ -11,9 +11,12 @@ interface OrderItem {
 }
 
 const razorpay = new Razorpay({
-  key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_SECRET_ID,
+  key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!,
+  key_secret: process.env.RAZORPAY_SECRET_ID!,
+
 });
+ 
+
 
 interface Address {
   fullName: string;
@@ -53,6 +56,7 @@ export async function POST(request: NextRequest) {
       if (!product) continue;
       amount += product.offerPrice * item.quantity;
     }
+  
 
     const totalAmount = amount + Math.floor(amount * 0.02); // add 2% fee
 
