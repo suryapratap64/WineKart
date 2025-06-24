@@ -109,14 +109,20 @@ const createOrder = async () => {
       return toast.error(data.message || "Order creation failed");
     }
 
-    // ✅ Step 2: Load Razorpay safely
+    // ✅Step 2: Load Razorpay safely
     const isLoaded = await loadRazorpayScript();
     if (!isLoaded || typeof window.Razorpay === "undefined") {
       return toast.error("Razorpay SDK failed to load. Please refresh and try again.");
     }
+    const razorpayKey = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
+
+if (!razorpayKey) {
+  toast.error("Missing Razorpay public key");
+  return;
+}
 
     const options = {
-      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!, // ensure this is defined
+      key:razorpayKey, // ensure this is defined
       amount: data.amount,
       currency: data.currency,
       name: "Your Store Name",
