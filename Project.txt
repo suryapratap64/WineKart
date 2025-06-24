@@ -3,4 +3,4 @@ clerk used for the user authentication;
 webhooks use for the background requests in that inngest is used;
 razorpay is used for the payment getway;
 toast useed for the message or notification;
-
+This project used assest for local file storage;

@@ -40,14 +40,24 @@ const Navbar = () => {
           Contact
         </Link>
 
-        {isSeller && (
+        {/* {isSeller && (
           <button
             onClick={() => router.push("/seller")}
             className="text-xs border cursor-pointer px-4 py-1.5 rounded-full"
           >
             Seller Dashboard
           </button>
-        )}
+        )} */}
+
+      {/* Allow for all that they see the feature; */}
+     
+          <button
+            onClick={() => router.push("/seller")}
+            className="text-xs border cursor-pointer px-4 py-1.5 rounded-full"
+          >
+            Seller Dashboard
+          </button>
+      
       </div>
 
       <ul className="hidden md:flex items-center gap-4 ">
