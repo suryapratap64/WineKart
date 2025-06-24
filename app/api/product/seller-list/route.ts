@@ -3,8 +3,17 @@ import Product from "@/models/Product";
 import { getAuth } from "@clerk/nextjs/server";
 import authSeller from "@/lib/authSeller";
 import { NextRequest, NextResponse } from "next/server";
+import type { NextApiRequest } from "next";
+import type { NextRequest as AppNextRequest } from "next/server";
 
-export async function DELETE(request: NextRequest, context: { params: { id: string } }) {
+// Fix the type for context by explicitly declaring params
+interface Context {
+  params: {
+    id: string;
+  };
+}
+
+export async function DELETE(request: AppNextRequest, context: Context) {
   try {
     const { id } = context.params;
 
@@ -30,7 +39,7 @@ export async function DELETE(request: NextRequest, context: { params: { id: stri
     return NextResponse.json({ success: true, message: "Product deleted" });
   } catch (error) {
     return NextResponse.json(
-      { success: false, message: (error as Error).message || "Server Error" },
+      { success: false, message: (error as Error).message || "Server error" },
       { status: 500 }
     );
   }
