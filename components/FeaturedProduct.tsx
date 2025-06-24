@@ -6,23 +6,24 @@ import { assets } from "@/assets/assets";
 const products = [
   {
     id: 1,
-    image: assets.girl_with_headphone_image,
-    title: "Unparalleled Sound",
-    description: "Experience crystal-clear audio with premium headphones.",
+    image: assets.back_1,
+    title: "Rich & Refined",
+    description: "Indulge in the bold flavor of our premium red wines.",
   },
   {
     id: 2,
-    image: assets.girl_with_earphone_image,
-    title: "Stay Connected",
-    description: "Compact and stylish earphones for every occasion.",
+    image: assets.back_2,
+    title: "Crisp & Elegant",
+    description: "Discover the smooth taste of handcrafted white wines.",
   },
   {
     id: 3,
-    image: assets.boy_with_laptop_image,
-    title: "Power in Every Pixel",
-    description: "Shop the latest laptops for work, gaming, and more.",
+    image: assets.back_3,
+    title: "Celebrate in Style",
+    description: "Rosé wines perfect for every celebration and moment.",
   },
 ];
+
  export const FeaturedProduct = () =>{
 
     return (

@@ -47,9 +47,23 @@ import product_details_page_apple_earphone_image3 from "./product_details_page_a
 import product_details_page_apple_earphone_image4 from "./product_details_page_apple_earphone_image4.png";
 import product_details_page_apple_earphone_image5 from "./product_details_page_apple_earphone_image5.png";
 import logotheka from "./logotheka.png";
+import thumbnil_1 from "./thumbnil_1.png"
+import thumbnil_2 from "./thumbnil_2.png"
+import thumbnil_3 from "./thumbnil_3.png"
+import thumbnil_4 from "./thumbnil_4.png"
+import back_1 from "./back_1.png"
+import back_2 from "./back_2.png"
+import back_3 from "./back_3.png"
 export const assets = {
   logo,
   logotheka,
+  back_1,
+  back_2,
+back_3,
+  thumbnil_1,
+  thumbnil_2,
+  thumbnil_3,
+  thumbnil_4,
   search_icon,
   user_icon,
   cart_icon,

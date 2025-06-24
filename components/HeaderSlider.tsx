@@ -6,36 +6,47 @@ import { assets } from "@/assets/assets";
 
 const HeaderSlider = () => {
  const sliderData = [
-    {
-      id: 1,
-      title: "Experience Pure Sound - Your Perfect Headphones Awaits!",
-      offer: "Limited Time Offer 30% Off",
-      buttonText1: "Buy now",
-      buttonText2: "Find more",
-      imgSrc: assets.header_headphone_image,
-    },
-    {
-      id: 2,
-      title: "Next-Level Gaming Starts Here - Discover PlayStation 5 Today!",
-      offer: "Hurry up only few lefts!",
-      buttonText1: "Shop Now",
-      buttonText2: "Explore Deals",
-      imgSrc: assets.header_playstation_image,
-    },
-    {
-      id: 3,
-      title: "Power Meets Elegance - Apple MacBook Pro is Here for you!",
-      offer: "Exclusive Deal 40% Off",
-      buttonText1: "Order Now",
-      buttonText2: "Learn More",
-      imgSrc: assets.header_macbook_image,
-    },
-  ];
+
+  {
+    id: 1,
+    title: "Chill with Classic Brew Taste the Craft in Every Sip!",
+    offer: "Limited Time: 25% Off on 6-Packs",
+    buttonText1: "Order Beer",
+    buttonText2: "See Varieties",
+    imgSrc: assets.thumbnil_3,
+  },
+  {
+    id: 2,
+    title: "Golden Lager Refreshing Flavor, Timeless Taste!",
+    offer: "Buy 2 Get 1 Free  Today Only!",
+    buttonText1: "Buy Now",
+    buttonText2: "View Deals",
+    imgSrc: assets.thumbnil_4,
+  },
+  {
+    id: 3,
+    title: "Savor the Sophistication Premium Red Wine Awaits!",
+    offer: "Flat 30% Off Limited Bottles Left!",
+    buttonText1: "Shop Wine",
+    buttonText2: "Explore Collection",
+    imgSrc: assets.thumbnil_1, 
+  },
+  {
+    id: 4,
+    title: "Celebrate Moments Discover Elegant White Wines",
+    offer: "Special Discount: 20% Off Today",
+    buttonText1: "Buy White Wine",
+    buttonText2: "Know More",
+    imgSrc: assets.thumbnil_2, 
+  },
+];
+
+
   const [currentSlide,setCurrentSlide]=useState(0);
   useEffect(()=>{
     const interval=setInterval(()=>{
       setCurrentSlide((prevSlide) => (prevSlide + 1) % sliderData.length);
-    }, 1000);
+    }, 4000);
     return ()=>clearInterval(interval);
 
   },[ sliderData.length]);
@@ -54,7 +65,7 @@ const HeaderSlider = () => {
         {sliderData.map((slide, index) => (
           <div
             key={slide.id}
-            className="flex flex-col-reverse md:flex-row items-center justify-between bg-[#E6E9F2] py-8 md:px-14 px-5 mt-6 rounded-xl min-w-full"
+            className="flex flex-col-reverse md:flex-row items-center justify-between bg-white py-8 md:px-14 px-5 mt-6 rounded-xl min-w-full"
           >
             <div className="md:pl-8 mt-10 md:mt-0">
               <p className="md:text-base text-orange-600 pb-1">{slide.offer}</p>
@@ -67,13 +78,13 @@ const HeaderSlider = () => {
                 </button>
                 <button className="group flex items-center gap-2 px-6 py-2.5 font-medium">
                   {slide.buttonText2}
-                  <Image className="group-hover:translate-x-1 transition" src={assets.arrow_icon} alt="arrow_icon" />
+                  <Image className="group-hover:translate-x-1  transition" src={assets.arrow_icon} alt="arrow_icon" />
                 </button>
               </div>
             </div>
             <div className="flex items-center flex-1 justify-center">
               <Image
-                className="md:w-72 w-48"
+                className="md:w-72 rounded-xl w-48"
                 src={slide.imgSrc}
                 alt={`Slide ${index + 1}`}
               />

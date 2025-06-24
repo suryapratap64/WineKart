@@ -61,7 +61,8 @@ const MyOrders: React.FC = () => {
   };
 
   useEffect(() => {
-    if (user) fetchOrders();
+    if (user) 
+      {fetchOrders();}
   }, [user]);
 
   return (

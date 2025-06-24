@@ -18,8 +18,8 @@ export async function GET(request: NextRequest) {
     await connectDB();
 
     // These lines don't do anything and should be removed unless you're checking schema length (e.g., Address.countDocuments())
-    // Address.length
-    // Product.length
+     Address.length
+     Product.length
 
     const orders = await Order.find({ userId }).populate([
       { path: "address" },

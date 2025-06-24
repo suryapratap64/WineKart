@@ -1,5 +1,5 @@
 import connectDB from "../../../../config/db";
-// import authSeller from "../../../../lib/authSeller";
+import authSeller from "../../../../lib/authSeller";
 import Product from "../../../../models/Product";
 import { getAuth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
@@ -15,18 +15,19 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // const isSeller = await authSeller(userId);
+    const isSeller = await authSeller(userId);
 
-    // if (!isSeller) {
-    //   return NextResponse.json(
-    //     { success: false, message: "Not authorized" },
-    //     { status: 403 }
-    //   );
-    // }
+    if (!isSeller) {
+      return NextResponse.json(
+        { success: false, message: "Not authorized" },
+        { status: 403 }
+      );
+    }
 
     await connectDB();
 
-    const products = await Product.find({ userId }); // Fetch only seller's products
+    const products = await Product.find({ userId });
+    
     return NextResponse.json({ success: true, products });
   } catch (error: unknown) {
     return NextResponse.json(

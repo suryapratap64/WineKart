@@ -13,7 +13,7 @@ const AddProduct: React.FC = () => {
   const [files, setFiles] = useState<File[]>([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("Earphone");
+  const [category, setCategory] = useState("English");
   const [price, setPrice] = useState("");
   const [offerPrice, setOfferPrice] = useState("");
 
@@ -44,7 +44,7 @@ const AddProduct: React.FC = () => {
         setFiles([]);
         setName("");
         setDescription("");
-        setCategory("Earphone");
+        setCategory("Desi");
         setPrice("");
         setOfferPrice("");
       } else {
@@ -140,14 +140,20 @@ const AddProduct: React.FC = () => {
               value={category}
             >
               {[
-                "Earphone",
-                "Headphone",
-                "Watch",
-                "Smartphone",
-                "Laptop",
-                "Camera",
-                "Accessories",
-              ].map((item) => (
+  "Red Wine",
+  "White Wine",
+  "Rosé Wine",
+  "Sparkling Wine",
+  "Lager",
+  "IPA",
+  "Stout",
+  "Pilsner",
+  "Wheat Beer",
+  "Dessert Wine",
+  "Ale",
+  "Fortified Wine",
+  "Organic Wine"
+].map((item) => (
                 <option key={item} value={item}>
                   {item}
                 </option>
@@ -188,7 +194,7 @@ const AddProduct: React.FC = () => {
 
         <button
           type="submit"
-          className="px-8 py-2.5 bg-orange-600 text-white font-medium rounded"
+          className="px-8 py-2.5 cursor-pointer bg-orange-600 text-white font-medium rounded"
         >
           ADD
         </button>

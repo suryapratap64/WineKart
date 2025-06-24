@@ -9,15 +9,23 @@ import { useClerk, UserButton } from "@clerk/nextjs";
 const Navbar = () => {
   const { isSeller, router, user } = useAppContext();
   const { openSignIn } = useClerk();
+    const handleSignIn = () => {
+    if (!user) {
+      openSignIn();
+    } else {
+      console.log("User is already signed in");
+    }
+  };
 
   return (
-    <nav className="flex items-center justify-between px-6 md:px-16 lg:px-32 py-3 border-b border-gray-300 text-gray-700">
-      <Image
-        className="cursor-pointer w-28 md:w-32"
+    <nav className="flex items-center  justify-between px-6 md:px-16 lg:px-32 py-3 border-b border-gray-300 text-gray-700">
+      {/* <Image
+      
         onClick={() => router.push("/")}
         src={assets.logo}
         alt="logo"
-      />
+      /> */}
+      <h1   onClick={() => router.push("/")}  className="cursor-pointer text-orange-600 text-2xl font-serif  w-28 md:w-32">WineKart</h1>
       <div className="flex items-center gap-4 lg:gap-8 max-md:hidden">
         <Link href="/" className="hover:text-gray-900 transition">
           Home
@@ -35,7 +43,7 @@ const Navbar = () => {
         {isSeller && (
           <button
             onClick={() => router.push("/seller")}
-            className="text-xs border px-4 py-1.5 rounded-full"
+            className="text-xs border cursor-pointer px-4 py-1.5 rounded-full"
           >
             Seller Dashboard
           </button>
@@ -65,7 +73,7 @@ const Navbar = () => {
           </>
         ) : (
           <button
-            onClick={() => openSignIn()}
+            onClick={() => handleSignIn()}
             className="flex items-center gap-2 hover:text-gray-900 transition"
           >
             <Image src={assets.user_icon} alt="user icon" />
@@ -118,7 +126,7 @@ const Navbar = () => {
           </>
         ) : (
           <button
-            onClick={() => openSignIn()}
+            onClick={() => handleSignIn()}
             className="flex items-center gap-2 hover:text-gray-900 transition"
           >
             <Image src={assets.user_icon} alt="user icon" />

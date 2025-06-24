@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { cartData }: { cartData: CartItem[] } = await request.json();
+    const { cartData }= await request.json();
 
     await connectDB();
 

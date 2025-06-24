@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AppContextProvider } from "../context/AppContext";
 import { ClerkProvider } from "@clerk/nextjs";
-
+import { ToastContainer } from "react-toastify";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -30,7 +30,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ClerkProvider>
-          <AppContextProvider>{children}</AppContextProvider>
+          <AppContextProvider>{children}
+               <ToastContainer position="top-right" autoClose={3000}/>
+          </AppContextProvider>
         </ClerkProvider>
       </body>
     </html>

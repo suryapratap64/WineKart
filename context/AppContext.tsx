@@ -78,11 +78,11 @@ export const AppContextProvider: React.FC<ProviderProps> = ({ children }) => {
 
   const [products, setProducts] = useState<ProductType[]>([]);
   const [userData, setUserData] = useState<UserType | false>(false);
-  const [isSeller, setIsSeller] = useState<boolean>(true);
+  const [isSeller, setIsSeller] = useState<boolean>(false);
   const [cartItems, setCartItems] = useState<CartItemsType>({});
 
   const fetchProductData = async () => {
-    setProducts(productsDummyData);
+   
     try {
       const { data } = await axios.get('/api/product/list');
       if (data.success) {

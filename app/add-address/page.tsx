@@ -43,7 +43,7 @@ const AddAddress = () => {
       const { data } = await axios.post(
         "/api/user/add-address",
         { address },
-        { headers: { Authorization: `Bearer${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       if (data.success) {
         toast.success(data.message);

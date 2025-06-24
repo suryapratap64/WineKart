@@ -1,5 +1,6 @@
 import { serve } from "inngest/next";
 import {
+  createUserOrder,
   inngest,
   SyncUserCreation,
   syncUserDeletion,
@@ -10,7 +11,11 @@ import type { NextRequest } from "next/server";
 // Serve the functions via Inngest
 export const { GET, POST, PUT } = serve({
   client: inngest,
-  functions: [SyncUserCreation, SyncUserUpdation, syncUserDeletion],
+  functions:
+   [SyncUserCreation, SyncUserUpdation, 
+  syncUserDeletion,
+  createUserOrder
+],
 });
 
 // import { serve } from "inngest/next";
