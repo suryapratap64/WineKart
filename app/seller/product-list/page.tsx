@@ -26,6 +26,27 @@ const ProductList: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
+const handleDelete = async (productId: string) => {
+  if (!confirm("Are you sure you want to delete this product?")) return;
+
+  try {
+    const token = await getToken();
+    const { data } = await axios.delete(`/api/product/delete/${productId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (data.success) {
+      toast.success("Product deleted successfully");
+      setProducts(products.filter((p) => p._id !== productId));
+    } else {
+      toast.error(data.message);
+    }
+  } catch (error) {
+    toast.error((error as Error).message || "Failed to delete product");
+  }
+};
+
+
   const fetchSellerProduct = async () => {
     try {
       const token = await getToken();
@@ -95,7 +116,7 @@ const ProductList: React.FC = () => {
                       {product.category}
                     </td>
                     <td className="px-4 py-3">₹{product.offerPrice}</td>
-                    <td className="px-4 py-3 max-sm:hidden">
+                    <td className="px-4 py-3 flex flex-row gap-2 max-sm:hidden">
                       <button
                         onClick={() => router.push(`/product/${product._id}`)}
                         className="flex items-center gap-1 px-1.5 md:px-3.5 py-2 bg-orange-600 text-white rounded-md"
@@ -106,7 +127,15 @@ const ProductList: React.FC = () => {
                           src={assets.redirect_icon}
                           alt="redirect_icon"
                         />
+                        
                       </button>
+                      <button
+      onClick={() => handleDelete(product._id)}
+      className="px-2 py-1 bg-red-600 text-white rounded-md hover:bg-red-700"
+    >
+      Delete
+    </button>
+                        
                     </td>
                   </tr>
                 ))}

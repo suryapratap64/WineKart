@@ -1,14 +1,19 @@
 import { inngest } from "../../../../config/inngest";
 import Product from "../../../../models/Product";
-import User from "../../../../models/User"; // ✅ Fix Clerk confusion - use your MongoDB User model
+import User from "../../../../models/User"; 
 import { getAuth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
-
+import Razorpay from "razorpay";
 // Types for clarity
 interface OrderItem {
   product: string;
   quantity: number;
 }
+
+const razorpay = new Razorpay({
+  key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_SECRET_ID,
+});
 
 interface Address {
   fullName: string;
@@ -18,6 +23,7 @@ interface Address {
   city: string;
   state: string;
 }
+
 
 export async function POST(request: NextRequest) {
   try {
@@ -39,6 +45,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
+
     // Calculate order amount
     let amount = 0;
     for (const item of items) {
@@ -49,6 +56,14 @@ export async function POST(request: NextRequest) {
 
     const totalAmount = amount + Math.floor(amount * 0.02); // add 2% fee
 
+    // Create Razorpay Order
+    const order = await razorpay.orders.create({
+      amount: totalAmount * 100, // paise
+      currency: "INR",
+      receipt: `receipt_order_${Date.now()}`,
+      payment_capture: true,
+    });
+
     await inngest.send({
       name: "order/created",
       data: {
@@ -57,6 +72,7 @@ export async function POST(request: NextRequest) {
         items,
         amount: totalAmount,
         date: Date.now(),
+        razorpayOrderId: order.id,
       },
     });
 

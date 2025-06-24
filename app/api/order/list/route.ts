@@ -20,6 +20,7 @@ export async function GET(request: NextRequest) {
     // These lines don't do anything and should be removed unless you're checking schema length (e.g., Address.countDocuments())
      Address.length
      Product.length
+    
 
     const orders = await Order.find({ userId }).populate([
       { path: "address" },

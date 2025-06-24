@@ -5,6 +5,7 @@ import { addressDummyData } from "@/assets/assets";
 import { useAppContext } from "../context/AppContext";
 import { toast } from "react-toastify";
 import axios from "axios";
+import Razorpay from "razorpay";
 
 // Type definitions
 interface Address {
@@ -63,45 +64,133 @@ const OrderSummary = () => {
     setSelectedAddress(address);
     setIsDropdownOpen(false);
   };
+const loadRazorpayScript = (): Promise<boolean> => {
+  return new Promise((resolve) => {
+    if (typeof window === "undefined") return resolve(false);
+    if (window.Razorpay) return resolve(true); // Already loaded
 
-  const createOrder = async () => {
-    try {
-      if (!selectedAddress) {
-        return toast.error("Please select an address");
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+};
+const createOrder = async () => {
+  try {
+    if (!selectedAddress) {
+      return toast.error("Please select an address");
+    }
+
+    let cartItemsArray: CartItem[] = Object.keys(cartItems).map((key) => ({
+      product: key,
+      quantity: cartItems[key],
+    })).filter((item) => item.quantity > 0);
+
+    if (cartItemsArray.length === 0) {
+      return toast.error("Cart is empty");
+    }
+
+    const token = await getToken();
+
+    // ✅ Step 1: Create order on backend
+    const { data } = await axios.post(
+      "/api/order/create",
+      {
+        address: selectedAddress, // or selectedAddress._id based on backend
+        items: cartItemsArray,
+      },
+      {
+        headers: { Authorization: `Bearer ${token}` },
       }
+    );
 
-      let cartItemsArray: CartItem[] = Object.keys(cartItems).map((key) => ({
-        product: key,
-        quantity: cartItems[key],
-      }));
-      cartItemsArray = cartItemsArray.filter((item) => item.quantity > 0);
+    if (!data.success) {
+      return toast.error(data.message || "Order creation failed");
+    }
 
-      if (cartItemsArray.length === 0) {
-        return toast.error("Cart is empty");
-      }
+    // ✅ Step 2: Load Razorpay safely
+    const isLoaded = await loadRazorpayScript();
+    if (!isLoaded || typeof window.Razorpay === "undefined") {
+      return toast.error("Razorpay SDK failed to load. Please refresh and try again.");
+    }
 
-      const token = await getToken();
-      const { data } = await axios.post(
-        "/api/order/create",
-        {
-          address: selectedAddress._id,
-          items: cartItemsArray,
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+    const options = {
+      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!, // ensure this is defined
+      amount: data.amount,
+      currency: data.currency,
+      name: "Your Store Name",
+      description: "Order Payment",
+      order_id: data.orderId,
+      handler: async function (response: any) {
+        toast.success("Payment Successful 🎉");
 
-      if (data.success) {
-        toast.success(data.message);
+        // await axios.post("/api/order/verify", {
+        //   razorpay_order_id: response.razorpay_order_id,
+        //   razorpay_payment_id: response.razorpay_payment_id,
+        //   razorpay_signature: response.razorpay_signature,
+        // });
+
         setCartItems({});
         router.push("/order-placed");
-      } else {
-        toast.error(data.message);
-      }
-    } catch (error) {
-      if (error instanceof Error) toast.error(error.message);
-      else toast.error("Order creation failed.");
-    }
-  };
+      },
+      prefill: {
+        name: selectedAddress.fullName,
+        contact: selectedAddress.phoneNumber,
+      },
+      theme: {
+        color: "#F37254",
+      },
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  } catch (error) {
+    console.error(error);
+    toast.error("Payment process failed.");
+  }
+};
+
+
+
+  // const createOrder = async () => {
+  //   try {
+  //     if (!selectedAddress) {
+  //       return toast.error("Please select an address");
+  //     }
+
+  //     let cartItemsArray: CartItem[] = Object.keys(cartItems).map((key) => ({
+  //       product: key,
+  //       quantity: cartItems[key],
+  //     }));
+  //     cartItemsArray = cartItemsArray.filter((item) => item.quantity > 0);
+
+  //     if (cartItemsArray.length === 0) {
+  //       return toast.error("Cart is empty");
+  //     }
+
+  //     const token = await getToken();
+  //     const { data } = await axios.post(
+  //       "/api/order/create",
+  //       {
+  //         address: selectedAddress._id,
+  //         items: cartItemsArray,
+  //       },
+  //       { headers: { Authorization: `Bearer ${token}` } }
+  //     );
+
+  //     if (data.success) {
+  //       toast.success(data.message);
+  //       setCartItems({});
+  //       router.push("/order-placed");
+  //     } else {
+  //       toast.error(data.message);
+  //     }
+  //   } catch (error) {
+  //     if (error instanceof Error) toast.error(error.message);
+  //     else toast.error("Order creation failed.");
+  //   }
+  // };
 
   useEffect(() => {
     if (user) {
