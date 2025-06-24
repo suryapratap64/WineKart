@@ -31,10 +31,11 @@ const handleDelete = async (productId: string) => {
 
   try {
     const token = await getToken();
-    const { data } = await axios.delete(`/api/product/delete/${productId}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
+    const { data } = await axios.delete(`/api/product/delete?id=${productId}`, {
+  headers: {
+    Authorization: `Bearer ${await getToken()}`
+  }
+});
     if (data.success) {
       toast.success("Product deleted successfully");
       setProducts(products.filter((p) => p._id !== productId));
@@ -116,7 +117,7 @@ const handleDelete = async (productId: string) => {
                       {product.category}
                     </td>
                     <td className="px-4 py-3">₹{product.offerPrice}</td>
-                    <td className="px-4 py-3 flex flex-row gap-2 max-sm:hidden">
+                    <td className="px-4 py-3 flex flex-row max-sm:hidden">
                       <button
                         onClick={() => router.push(`/product/${product._id}`)}
                         className="flex items-center gap-1 px-1.5 md:px-3.5 py-2 bg-orange-600 text-white rounded-md"
