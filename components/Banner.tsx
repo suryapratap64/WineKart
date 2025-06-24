@@ -16,7 +16,7 @@ const Banner=() =>{
          Level Up Your Taste  Discover Premium Wines
         </h2>
         <p className="max-w-[343px] font-medium text-gray-800/60">
-         From sunset moments to celebratory toasts your wine, your way
+         From sunset moments to celebratory toasts your wine  your way
         </p>
         <button className="group flex items-center justify-center gap-1 px-12 py-2.5 bg-orange-600 rounded text-white">
           Buy now
