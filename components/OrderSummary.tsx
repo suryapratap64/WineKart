@@ -116,7 +116,7 @@ const createOrder = async () => {
     }
 
     const options = {
-      key: process.env.RAZORPAY_KEY_ID!, // ensure this is defined
+      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!, // ensure this is defined
       amount: data.amount,
       currency: data.currency,
       name: "Your Store Name",
