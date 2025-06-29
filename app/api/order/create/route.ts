@@ -10,8 +10,8 @@ interface OrderItem {
   quantity: number;
 }
 
-const key_id = process.env.RAZORPAY_KEY_ID!;
-const key_secret = process.env.RAZORPAY_SECRET_ID!;
+const key_id = process.env.RAZORPAY_KEY_ID;
+const key_secret = process.env.RAZORPAY_SECRET_ID;
 console.log("RAZORPAY_KEY_ID:", process.env.RAZORPAY_KEY_ID);
 
 if (!key_id || !key_secret) {

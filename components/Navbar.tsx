@@ -25,7 +25,7 @@ const Navbar = () => {
         src={assets.logo}
         alt="logo"
       /> */}
-      <h1   onClick={() => router.push("/")}  className="cursor-pointer text-orange-600 text-2xl font-serif  w-28 md:w-32">WineKart</h1>
+      <h1   onClick={() => router.push("/")}  className="cursor-pointer text-orange-600 text-2xl font-serif  w-28 md:w-32">QuickMart</h1>
       <div className="flex items-center gap-4 lg:gap-8 max-md:hidden">
         <Link href="/" className="hover:text-gray-900 transition">
           Home
